@@ -730,6 +730,7 @@ local function processItemsParamGet(items)
         if mavLib.queue_message(msg) == true then
           items[idx].status = 3
           items[idx].timer = getTime()
+          items[idx].set = false
         end
       end
     end
@@ -765,6 +766,7 @@ local function processItemsParamSet(items)
           if mavLib.queue_message(msg) == true then
             items[i].status = 3
             items[i].timer = getTime()
+            items[i].set = true
           end
         end
       end
@@ -799,14 +801,18 @@ local function processItemTimers(items)
   for i=1,#items
   do
     -- check if a refresh is needed
-    if items[i].status == 3 then 
+    if items[i].status == 3 then
       -- check timer
       if now - items[i].timer > 500 then
         items[i].status = 4
         items[i].timer = now
       end
     elseif items[i].status == 4 then
-      items[i].status = 1
+      if items[i].set == true then
+        items[i].status = 2
+      else
+        items[i].status = 1
+      end
     end
   end
 end
@@ -1167,7 +1173,7 @@ local function init()
   mavLib = utils.doLibrary("mavlite")  
   drawLib = utils.doLibrary("taranis")
   -- ok done
-  utils.pushMessage(7,"Yaapu LuaGCS 1.0")
+  utils.pushMessage(7,"Yaapu LuaGCS 1.0.1")
   -- recover memory
   collectgarbage()
   collectgarbage()

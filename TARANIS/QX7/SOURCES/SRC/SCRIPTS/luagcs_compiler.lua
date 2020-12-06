@@ -352,7 +352,7 @@ local function compileAll()
 end
 
 local function init()
-  pushMessage("Yaapu LuaGCS 1.0")
+  pushMessage("Yaapu LuaGCS 1.0.1")
   compileAll()
 end
 

@@ -12,3 +12,7 @@ improved memory footprint
 version 1.0
 
 heli fixes
+
+version 1.0.1
+
+both set and get commands retry on failure
